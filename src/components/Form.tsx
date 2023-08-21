@@ -8,6 +8,7 @@ function Form() {
   const [url, setUrl] = useState('');
   const [enableRegister, setEnableRegister] = useState(true);
   const [listOfServices, setListOfServices] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleDeleteItem = (item) => {
     const newList = listOfServices.filter((element) => element.service !== item);
@@ -15,7 +16,6 @@ function Form() {
       setListOfServices([]);
     } else {
       setListOfServices(newList);
-      console.log(listOfServices);
     }
   };
 
@@ -161,7 +161,12 @@ function Form() {
               <div key={ index }>
                 <li><a href={ item.url }>{ item.service }</a></li>
                 <li>{item.login}</li>
-                <li>{item.password}</li>
+                <li>
+                  <p>
+                    {!showPassword && (item.password)}
+                    {showPassword && ('******')}
+                  </p>
+                </li>
                 <br />
                 <button
                   onClick={ () => { handleDeleteItem(item.service); } }
@@ -173,6 +178,13 @@ function Form() {
             ))}
           </ul>
         )}
+        <label>
+          Esconder senhas
+          <input
+            type="checkbox"
+            onClick={ () => { setShowPassword(!showPassword); } }
+          />
+        </label>
       </div>
     </div>
   );
