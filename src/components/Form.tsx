@@ -7,6 +7,22 @@ function Form() {
   const [password, setPassword] = useState('');
   const [url, setUrl] = useState('');
   const [enableRegister, setEnableRegister] = useState(true);
+  const [listOfServices, setListOfServices] = useState([]);
+
+  const handleRegistration = () => {
+    const newService = {
+      service,
+      login,
+      password,
+      url,
+    };
+    setListOfServices([...listOfServices, newService]);
+    setService('');
+    setLogin('');
+    setPassword('');
+    setUrl('');
+    setHideForm(!hideForm);
+  };
 
   const testPasswordRegex = () => {
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,16}$/;
@@ -40,14 +56,17 @@ function Form() {
   };
 
   const formVerification = () => {
-    setEnableRegister(!(
-      service !== ''
-      && login !== ''
-      && url !== ''
-      && password !== ''
-      && password.length > 8
-      && password.length < 16
-      && testPasswordRegex()));
+    setEnableRegister(
+      !(
+        service !== ''
+        && login !== ''
+        && url !== ''
+        && password !== ''
+        && password.length > 8
+        && password.length < 16
+        && testPasswordRegex()
+      ),
+    );
   };
 
   return (
@@ -94,8 +113,16 @@ function Form() {
             />
           </label>
 
-          <button type="button" disabled={ enableRegister }>Cadastrar</button>
-          <button type="button" onClick={ () => setHideForm(!hideForm) }>Cancelar</button>
+          <button
+            type="button"
+            disabled={ enableRegister }
+            onClick={ handleRegistration }
+          >
+            Cadastrar
+          </button>
+          <button type="button" onClick={ () => setHideForm(!hideForm) }>
+            Cancelar
+          </button>
         </form>
       )}
       {hideForm && (
@@ -104,10 +131,33 @@ function Form() {
         </button>
       )}
       <div>
-        <p className={ firstVerification(password) }>Possuir 8 ou mais caracteres</p>
-        <p className={ secondVerification(password) }>Possuir até 16 caracteres</p>
+        <p className={ firstVerification(password) }>
+          Possuir 8 ou mais caracteres
+        </p>
+        <p className={ secondVerification(password) }>
+          Possuir até 16 caracteres
+        </p>
         <p className={ thirdVerification(password) }>Possuir letras e números</p>
-        <p className={ fourthVerification(password) }>Possuir algum caractere especial</p>
+        <p className={ fourthVerification(password) }>
+          Possuir algum caractere especial
+        </p>
+      </div>
+      <div>
+        {listOfServices.length === 0 ? (
+          <p>Nenhuma senha cadastrada</p>
+        ) : (
+          <ul>
+            {listOfServices.map((item, index) => (
+              <li key={ index }>
+                <a href={ item.url }>{ item.service }</a>
+                {' '}
+                {item.login}
+                {' '}
+                {item.password}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
