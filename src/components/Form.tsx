@@ -9,6 +9,16 @@ function Form() {
   const [enableRegister, setEnableRegister] = useState(true);
   const [listOfServices, setListOfServices] = useState([]);
 
+  const handleDeleteItem = (item) => {
+    const newList = listOfServices.filter((element) => element.service !== item);
+    if (newList.length === 0) {
+      setListOfServices([]);
+    } else {
+      setListOfServices(newList);
+      console.log(listOfServices);
+    }
+  };
+
   const handleRegistration = () => {
     const newService = {
       service,
@@ -149,11 +159,16 @@ function Form() {
           <ul>
             {listOfServices.map((item, index) => (
               <li key={ index }>
-                <a href={ item.url }>{ item.service }</a>
-                {' '}
-                {item.login}
-                {' '}
-                {item.password}
+                <li><a href={ item.url }>{ item.service }</a></li>
+                <li>{item.login}</li>
+                <li>{item.password}</li>
+                <br />
+                <button
+                  onClick={ () => { handleDeleteItem(item.service); } }
+                  data-testid="remove-btn"
+                >
+                  Delete Item
+                </button>
               </li>
             ))}
           </ul>
