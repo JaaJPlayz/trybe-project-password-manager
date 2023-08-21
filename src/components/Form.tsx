@@ -158,7 +158,7 @@ function Form() {
         ) : (
           <ul>
             {listOfServices.map((item, index) => (
-              <li key={ index }>
+              <div key={ index }>
                 <li><a href={ item.url }>{ item.service }</a></li>
                 <li>{item.login}</li>
                 <li>{item.password}</li>
@@ -169,7 +169,7 @@ function Form() {
                 >
                   Delete Item
                 </button>
-              </li>
+              </div>
             ))}
           </ul>
         )}
