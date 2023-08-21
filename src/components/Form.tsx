@@ -13,6 +13,32 @@ function Form() {
     return regex.test(password);
   };
 
+  const results = ['valid-password-check', 'invalid-password-check'];
+  const otherResults = ['valid-password-check', 'invalid-password-check'];
+
+  const firstVerification = (pass) => {
+    return pass.length > 8 ? otherResults[0] : otherResults[1];
+  };
+
+  const secondVerification = (pass) => {
+    return pass.length < 16 ? otherResults[0] : otherResults[1];
+  };
+
+  const thirdVerification = (pass) => {
+    const regex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+    return regex.test(pass) ? results[0] : results[1];
+  };
+
+  const fourthVerification = (pass) => {
+    const regex = /.*[!@#$%^&*()_+{}\]:;<>,.?~\\-].*/;
+    return regex.test(pass) ? results[0] : results[1];
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    firstVerification(event.target.value);
+  };
+
   const formVerification = () => {
     setEnableRegister(!(
       service !== ''
@@ -52,9 +78,9 @@ function Form() {
             Senha
             <input
               name="password"
-              type="text"
+              type="password"
               value={ password }
-              onChange={ (event) => setPassword(event.target.value) }
+              onChange={ (event) => handlePasswordChange(event) }
             />
           </label>
 
@@ -77,6 +103,12 @@ function Form() {
           Cadastrar nova Senha
         </button>
       )}
+      <div>
+        <p className={ firstVerification(password) }>Possuir 8 ou mais caracteres</p>
+        <p className={ secondVerification(password) }>Possuir até 16 caracteres</p>
+        <p className={ thirdVerification(password) }>Possuir letras e números</p>
+        <p className={ fourthVerification(password) }>Possuir algum caractere especial</p>
+      </div>
     </div>
   );
 }
