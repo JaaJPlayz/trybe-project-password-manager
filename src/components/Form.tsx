@@ -133,6 +133,19 @@ function Form() {
           <button type="button" onClick={ () => setHideForm(!hideForm) }>
             Cancelar
           </button>
+          <div>
+            <p className={ firstVerification(password) }>
+              Possuir 8 ou mais caracteres
+            </p>
+            <p className={ secondVerification(password) }>
+              Possuir até 16 caracteres
+            </p>
+            <p className={ thirdVerification(password) }>Possuir letras e números</p>
+            <p className={ fourthVerification(password) }>
+              Possuir algum caractere especial
+            </p>
+          </div>
+
         </form>
       )}
       {hideForm && (
@@ -140,18 +153,6 @@ function Form() {
           Cadastrar nova Senha
         </button>
       )}
-      <div>
-        <p className={ firstVerification(password) }>
-          Possuir 8 ou mais caracteres
-        </p>
-        <p className={ secondVerification(password) }>
-          Possuir até 16 caracteres
-        </p>
-        <p className={ thirdVerification(password) }>Possuir letras e números</p>
-        <p className={ fourthVerification(password) }>
-          Possuir algum caractere especial
-        </p>
-      </div>
       <div>
         {listOfServices.length === 0 ? (
           <p>Nenhuma senha cadastrada</p>
